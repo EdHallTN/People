@@ -20,7 +20,7 @@ public class Person implements Comparable {
         this.lastName = lastName;
         this.email = email;
         this.country = country;
-        this.ipAddress = idAddress;
+        this.ipAddress = ipAddress;
     }
 
     public String getiD() {

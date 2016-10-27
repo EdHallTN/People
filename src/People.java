@@ -1,6 +1,7 @@
 import jodd.json.JsonSerializer;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
@@ -17,6 +18,15 @@ public class People {
 
 
     public static void main(String[] args) throws IOException {
+        populateMapFromFile();
+        sortMap();
+        System.out.println(personMap);
+        writeFile("People.json", personMap.toString());
+
+    }
+
+
+    public static void populateMapFromFile() throws FileNotFoundException {
         File f = new File("people.csv");
         Scanner fileScanner = new Scanner(f);
         String line;
@@ -31,18 +41,24 @@ public class People {
             String keyValue = person.getCountry();
             if (personMap.containsKey(keyValue)) {
                 personList = personMap.get(keyValue);
-                final boolean add = personList.add(person);
-                Collections.sort(personList);
+                personList.add(person);
             } else {
                 personList = new ArrayList<>();
                 personList.add(person);
                 personMap.put(keyValue, personList);
-                Collections.sort(personList);
             }
         }
+    }
 
-        System.out.println(personMap);
-        writeFile("People.json", personMap.toString());
+    public static void sortMap() {
+        for (Map.Entry<String, ArrayList<Person>> entry : personMap.entrySet()) {
+            String keyValue = entry.getKey();
+            ArrayList<Person> personList = entry.getValue();
+
+            Collections.sort(personList);
+
+        }
+
     }
 
     static void writeFile(String fileName, String fileContent) throws IOException {
