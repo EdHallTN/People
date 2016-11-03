@@ -63,7 +63,7 @@ public class People {
 
     static void writeFile(String fileName, String fileContent) throws IOException {
         JsonSerializer serializer = new JsonSerializer();
-        String json = serializer.include(String.valueOf(personMap)).serialize(fileContent);
+        String json = serializer.include("*").serialize(personMap);
         File People = new File(fileName);
         FileWriter fw = new FileWriter(People);
         fw.write(json);
